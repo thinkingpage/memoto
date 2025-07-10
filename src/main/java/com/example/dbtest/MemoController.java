@@ -1,22 +1,26 @@
 package com.example.dbtest;
 
-import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicLong;
+import com.example.dbtest.model.Memo;
+import com.example.dbtest.repository.MemoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 @RestController
 public class MemoController {
 
-    private static final String template = "%s";
-    private final AtomicLong counter = new AtomicLong();
+    @Autowired
+    MemoRepository memoRepository;
 
+    @GetMapping("/getmemos")
+    public List<Memo> findAll() {
+        return memoRepository.findAll();
+    }
 
-    @GetMapping("/memo")
-    public Memo memo(@RequestParam(value = "text", defaultValue = "---") String textInput) {
-       return new Memo(counter.incrementAndGet(), String.format(template, textInput));
+    @PostMapping("/addmemo")
+    public void addMemo(@RequestBody Memo memo) {
+        memoRepository.save(memo);
     }
 
 }

@@ -1,0 +1,5 @@
+postgres spring connecten: 
+https://www.youtube.com/watch?v=ltvRsnka7Mo
+
+generator für daten:
+https://generatedata.com/generator
