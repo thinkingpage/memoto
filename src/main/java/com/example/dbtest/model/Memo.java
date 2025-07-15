@@ -1,6 +1,5 @@
 package com.example.dbtest.model;
 
-
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,8 +17,8 @@ public class Memo {
     private long id;
     @Column(name="title")
     private String title;
-    @Column(name="text")
-    private String text;
+    @Column(name="content",length = 1000)
+    private String content;
 
     @CreationTimestamp
     private Instant createdOn;
