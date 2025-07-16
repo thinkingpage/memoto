@@ -15,6 +15,7 @@ import java.util.Optional;
 public interface MemoRepository extends JpaRepository<Memo, Integer> {
 
     Memo getReferenceById(long id);
+    Memo deleteById(long id);
 
     List<Memo> findFirst10ByOrderByCreatedOnDesc();
 }
