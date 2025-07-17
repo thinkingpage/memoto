@@ -2,7 +2,10 @@ package com.example.dbtest;
 
 import com.example.dbtest.model.Memo;
 import com.example.dbtest.repository.MemoRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -14,7 +17,10 @@ public class MemoController {
     @Autowired
     MemoRepository memoRepository;
 
-    // kein mapping für index nötig. resources > static > index.html reicht.
+    @PersistenceContext
+    private EntityManager entityManager;
+
+
     @GetMapping("/getmemos")
     public List<Memo> findAll() {
         return memoRepository.findAll();
@@ -43,11 +49,12 @@ public class MemoController {
         return memoRepository.getReferenceById(id);
     }
 
+    @Transactional
     @GetMapping("/deletememobyid/{id}")
-    public String deleteById(@PathVariable long id) {
-        memoRepository.deleteById(id);
-        System.out.println("memo has been deleted");
-        return "delete successfully";
+    public void deleteById(@PathVariable long id) {
+
+     memoRepository.deleteById(id);
+     System.out.println("memo has been deleted");
     }
 
     @PostMapping("/addmemo")
