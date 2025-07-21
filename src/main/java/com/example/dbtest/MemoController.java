@@ -2,73 +2,75 @@ package com.example.dbtest;
 
 import com.example.dbtest.model.Memo;
 import com.example.dbtest.repository.MemoRepository;
+import com.example.dbtest.service.MemoService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
+
+
+// https://docs.spring.io/spring-data/relational/reference/repositories/core-concepts.html
+// https://docs.spring.io/spring-data/jpa/reference/jpa/getting-started.html
 
 @RestController
 public class MemoController {
 
+
     @Autowired
-    MemoRepository memoRepository;
+    MemoService memoService;
 
     @PersistenceContext
     private EntityManager entityManager;
 
-
-    @GetMapping("/getmemos")
-    public List<Memo> findAll() {
-        return memoRepository.findAll();
+    @GetMapping("/memos")
+    public ResponseEntity<List<Memo>> findAllMemos() {
+        List<Memo> memos = memoService.findAllMemos();
+        return new ResponseEntity<>(memos, HttpStatus.OK);
     }
 
-//    @GetMapping("/getmemobyid/{id}")
-//    public Memo getById(@PathVariable long id) {
-//        return memoRepository.getReferenceById(id);
-//    }
-
-    // https://docs.spring.io/spring-data/relational/reference/repositories/core-concepts.html
-    // https://docs.spring.io/spring-data/jpa/reference/jpa/getting-started.html
-    @GetMapping("/getmemobyid/{id}")
-    public Memo getById(@PathVariable long id) {
-        Memo memo = memoRepository.getReferenceById(id);
-        String memoTitle = memo.getTitle();
-        String memoContent = memo.getContent();
-        Instant memoDate = memo.getCreatedOn();
-
-        System.out.println("memoTitle: " + memoTitle);
-        System.out.println("memoContent: " + memoContent);
-        System.out.println("memoDate: " + memoDate);
-
-        System.out.println(memo);
-
-        return memoRepository.getReferenceById(id);
+    @GetMapping("/memos/{id}")
+    public ResponseEntity<Memo> findMemoById(@PathVariable long id) {
+        return new ResponseEntity<>(memoService.findMemoById(id), HttpStatus.OK);
     }
 
-    @Transactional
-    @GetMapping("/deletememobyid/{id}")
-    public void deleteById(@PathVariable long id) {
-
-     memoRepository.deleteById(id);
-     System.out.println("memo has been deleted");
+    @DeleteMapping("/memos/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable long id) {
+        memoService.deleteMemoById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
+
 
     @PostMapping("/addmemo")
     public void addMemo(@RequestBody Memo memo) {
-        memoRepository.save(memo);
+        memoService.addMemo(memo);
     }
 
-    // Aufgaben von Trello --
-    // Nutzung: Auf der Startseite immer die aktuellsten 10 anzeigen und Lazy Loading bei den darauf folgenden?
+
     @GetMapping("/find10firstmemos")
-    public List<Memo> find10firstmemos() {
-        return memoRepository.findFirst10ByOrderByCreatedOnDesc();
-        // Limiter informieren !
-
+    public ResponseEntity<List<Memo>> find10firstmemos() {
+        return new ResponseEntity<>(memoService.find10FirstMemos(), HttpStatus.OK);
     }
 
+    @GetMapping("/find")
+    public ResponseEntity<List<Memo>> find(
+            @RequestParam(name="title") String title,
+            @RequestParam(name="year") int year
+    ) {
+        return new ResponseEntity<>(memoService.findByTitleContaining(title, year), HttpStatus.OK);
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<List<Memo>> finde(
+            @RequestParam(name="title") String title,
+            @RequestParam(name="year") int year
+    ) {
+        return new ResponseEntity<>(memoService.finde(title, year), HttpStatus.OK);
+    }
 }
