@@ -48,7 +48,7 @@ public class MemoService {
 
     public Memo findMemoById(long id) {
         return memoRepository.findMemoById(id).
-                orElseThrow(() -> new MemoNotFoundException("Memo not found"));
+                orElseThrow(() -> new MemoNotFoundException("MemoService not found"));
     }
 
     public List<Memo> find10FirstMemos() {

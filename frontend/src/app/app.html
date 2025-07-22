@@ -1,0 +1,9 @@
+<div class="mx-auto">
+@for (memo of memos; track memo.id) {
+  <li>{{ memo.title }}</li>
+} @empty {
+  <p>There a no memos</p>
+}
+
+  <p> </p>
+</div>

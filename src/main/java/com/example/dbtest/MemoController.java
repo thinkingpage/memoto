@@ -47,7 +47,7 @@ public class MemoController {
     }
 
 
-    @PostMapping("/addmemo")
+    @PostMapping("/memos")
     public void addMemo(@RequestBody Memo memo) {
         memoService.addMemo(memo);
     }
