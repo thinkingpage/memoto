@@ -1,9 +1,14 @@
-<div class="mx-auto">
-@for (memo of memos; track memo.id) {
-  <li>{{ memo.title }}</li>
+<app-header></app-header>
+@for (memo of memos(); track memo.id) {
+  <div class="card my-2 card-sm card-border bg-base-200 w-96 mx-auto">
+    <div class="card-body flex-row">
+      <h2 class="card-title w-11/12">{{ memo.title }}</h2>
+      <div class="w-1/12 text-center">
+        <button>{{ memo.id }}</button>
+      </div>
+    </div>
+  </div>
 } @empty {
-  <p>There a no memos</p>
+  > no memos found
 }
-
-  <p> </p>
-</div>
+<app-footer></app-footer>

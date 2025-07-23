@@ -1,22 +1,26 @@
 import {ChangeDetectionStrategy, Component, OnInit, signal} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import {Memo} from './memo';
+import {MemoModel} from './models/memo.model';
 import {MemoService} from './memo.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {CommonModule} from '@angular/common';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
+  imports: [
+    HeaderComponent,
+    FooterComponent
+  ],
   templateUrl: './app.html',
-  imports: [CommonModule],
-  styleUrl: './app.css'
+  styleUrls: ['./app.css']
 })
 export class App implements OnInit {
   protected readonly title = signal('memento');
-  public memos: Memo[] = [];
+  public memos = signal<MemoModel[]>([]);
   constructor(private memoService: MemoService) {}
 
   ngOnInit() {
@@ -25,14 +29,11 @@ export class App implements OnInit {
 
   public getMemos(): void {
     this.memoService.getMemos().subscribe({
-      next: (response: Memo[]) => {
-        this.memos = response;
-        console.log(this.memos);
-        console.log("WORKS MEMOS");
+      next: (response: MemoModel[]) => {
+        this.memos.set(response);
       },
       error: (error: HttpErrorResponse) => {
         console.log(error.message);
-        console.log("NO MEMOS");
       }
     });
   }
