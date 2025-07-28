@@ -3,10 +3,10 @@
   <button (click)="showAddForm()" class="btn mr-4">Add Memo</button>
 
   @if (showAddFormBool()) {
-    <form class="mt-2 grid gap-y-2">
-      <input type="text" name="title" title() placeholder="title" class="input input-primary" />
-      <input type="text" name="content" placeholder="content" class="input input-primary" />
-      <button (click)="addMemo()" class="btn btn-primary" type="submit">Add</button>
+    <form [formGroup]="addMemoForm" (ngSubmit)="addMemo()" class="mt-2 grid gap-y-2">
+      <input formControlName="title" type="text" name="title" placeholder="title" class="input input-primary" />
+      <input formControlName="content" type="text" name="content" placeholder="content" class="input input-primary" />
+      <button class="btn btn-primary" type="submit">Add</button>
     </form>
   }
 

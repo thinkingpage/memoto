@@ -15,7 +15,7 @@ export class MemoService {
   }
 
   public addMemo(memo: MemoModel): Observable<MemoModel> {
-    return this.http.post<MemoModel>(`${this.apiServerUrl}/memos`, memo)
+    return this.http.post<any>(`${this.apiServerUrl}/memos`, memo)
   }
 
   public getMemo(memoId: number): Observable<MemoModel> {
