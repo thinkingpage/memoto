@@ -8,6 +8,8 @@ import {MemoService} from './memo.service';
 import {MemoModel} from './models/memo.model';
 import {HttpErrorResponse} from '@angular/common/http';
 import {MemoAllMemosComponent} from './components/memos/memo-all-memos.component';
+import {FormControl, FormGroup} from '@angular/forms';
+import {MemoAddMemo} from './components/memos/memo-add-memo';
 
 
 @Component({
@@ -17,7 +19,8 @@ import {MemoAllMemosComponent} from './components/memos/memo-all-memos.component
     HeaderComponent,
     FilterComponent,
     MemoAllMemosComponent,
-    FooterComponent
+    FooterComponent,
+    MemoAddMemo
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
@@ -27,13 +30,17 @@ export class App {
 
   constructor(private memoService: MemoService) {}
 
-  showAllMemos = signal(false);
+  showAddMemoComponent = signal<boolean>(false);
+  showAllMemoComponent = signal(false);
   memos = signal<MemoModel[]>([]);
 
-// type not needed (bool)
-  getAllMemosAPP() {
-    this.showAllMemos.update(value => !value);
-    if(!this.showAllMemos()) {
+  activateAddForm() {
+    this.showAddMemoComponent.update(value => !value);
+  }
+
+  activateMemoList() {
+    this.showAllMemoComponent.update(value => !value);
+    if(!this.showAllMemoComponent()) {
       return;
     }
     this.memoService.getMemos().subscribe({

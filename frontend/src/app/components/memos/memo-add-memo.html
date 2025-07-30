@@ -1,1 +1,16 @@
-<p>memo-add-memo works!</p>
+@if (showAddMemoForm()) {
+  <form [formGroup]="addMemoForm" (ngSubmit)="formMemo()"
+        class="mt-2 grid gap-y-2">
+    <input formControlName="title" type="text" name="title" placeholder="title"
+           required minlength="1"
+           class="input input-primary" />
+    <input formControlName="content" type="text" name="content" placeholder="content"
+           required minlength="1"
+           class="input input-primary" />
+    <button class="btn btn-primary" type="submit">Add</button>
+  </form>
+}
+<!--  @if (addMemoForm.get("title")?.invalid-->
+<!--  && addMemoForm.get("content")?.invalid) {-->
+<!--    <p>Titel und Content ergänzen!</p>-->
+<!--  }-->

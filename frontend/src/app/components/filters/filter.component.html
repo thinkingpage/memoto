@@ -1,12 +1,4 @@
 <div class="w-96 mx-auto">
-  <button (click)="getAllMemos()" class="btn mr-4">All Memos</button>
+  <button (click)="activateMemoList()" class="btn mr-4">All Memos</button>
   <button (click)="activateAddForm()" class="btn mr-4">Add Memo</button>
-
-  @if (showAddForm()) {
-    <form [formGroup]="addMemoForm" (ngSubmit)="addMemo()" class="mt-2 grid gap-y-2">
-      <input formControlName="title" type="text" name="title" placeholder="title" class="input input-primary" />
-      <input formControlName="content" type="text" name="content" placeholder="content" class="input input-primary" />
-      <button class="btn btn-primary" type="submit">Add</button>
-    </form>
-  }
 </div>
