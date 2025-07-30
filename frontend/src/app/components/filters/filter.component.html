@@ -1,29 +1,12 @@
 <div class="w-96 mx-auto">
   <button (click)="getAllMemos()" class="btn mr-4">All Memos</button>
-  <button (click)="showAddForm()" class="btn mr-4">Add Memo</button>
+  <button (click)="activateAddForm()" class="btn mr-4">Add Memo</button>
 
-  @if (showAddFormBool()) {
+  @if (showAddForm()) {
     <form [formGroup]="addMemoForm" (ngSubmit)="addMemo()" class="mt-2 grid gap-y-2">
       <input formControlName="title" type="text" name="title" placeholder="title" class="input input-primary" />
       <input formControlName="content" type="text" name="content" placeholder="content" class="input input-primary" />
       <button class="btn btn-primary" type="submit">Add</button>
     </form>
-  }
-
-<!-- Angular Forms-->
-
-  @if (showAllMemosBool()) {
-  <div class="mt-2">
-    @for (memo of memos(); track memo.id) {
-      <div class="flex-none card my-2 card-sm card-border bg-base-200">
-        <div class="card-body flex-row">
-          <h2 class="card-title w-11/12">{{ memo.title }}</h2>
-          <div class="w-1/12 text-center">
-            <button>{{ memo.id }}</button>
-          </div>
-        </div>
-      </div>
-    }
-  </div>
   }
 </div>

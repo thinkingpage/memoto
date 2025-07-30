@@ -1,0 +1,16 @@
+@if (showAllMemos()) {
+  <div class="mt-2">
+    @for (memo of memosFromDB(); track memo.id) {
+      <div class="flex-none card my-2 card-sm card-border bg-base-200">
+        <div class="card-body flex-row">
+          <h2 class="card-title w-11/12">{{ memo.title }}</h2>
+          <div class="w-1/12 text-center">
+            <button>{{ memo.id }}</button>
+          </div>
+        </div>
+      </div>
+    } @empty {
+      what?
+    }
+  </div>
+}
