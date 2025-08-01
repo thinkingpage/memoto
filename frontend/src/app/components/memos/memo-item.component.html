@@ -1,0 +1,15 @@
+<div class="w-96 mx-auto">
+  @if (memoFromBackend() !== null) {
+    <div class="mt-2">
+      <div class="flex-none card my-2 card-sm card-border bg-base-200">
+        <div class="card-body flex-row">
+          <h2 class="card-title w-1/2"> {{memoFromBackend()?.title}}</h2>
+          <h2 class="card-title w-1/2"> {{memoFromBackend()?.content}}</h2>
+          <div class="w-1/12 text-center">
+            <button></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

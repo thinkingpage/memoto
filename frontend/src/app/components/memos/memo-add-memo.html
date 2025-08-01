@@ -1,16 +1,23 @@
-@if (showAddMemoForm()) {
-  <form [formGroup]="addMemoForm" (ngSubmit)="formMemo()"
-        class="mt-2 grid gap-y-2">
-    <input formControlName="title" type="text" name="title" placeholder="title"
-           required minlength="1"
-           class="input input-primary" />
-    <input formControlName="content" type="text" name="content" placeholder="content"
-           required minlength="1"
-           class="input input-primary" />
-    <button class="btn btn-primary" type="submit">Add</button>
-  </form>
-}
-<!--  @if (addMemoForm.get("title")?.invalid-->
-<!--  && addMemoForm.get("content")?.invalid) {-->
-<!--    <p>Titel und Content ergänzen!</p>-->
-<!--  }-->
+<div class="w-96 mx-auto">
+  @if (showAddMemoForm()) {
+    <form [formGroup]="addMemoForm" (ngSubmit)="formMemo()" name="formContainer" class="mt-2 grid gap-y-2">
+      <input formControlName="title" type="text" name="title" placeholder="title" class="input input-primary"
+             required
+             minlength="1"
+      />
+      <input formControlName="content" type="text" name="content" placeholder="content" class="input input-primary"
+             required
+
+             minlength="1"
+      />
+      <button class="btn btn-primary" type="submit">Add</button>
+    </form>
+
+    @if (addMemoForm.controls.title.untouched && addMemoForm.controls.content.untouched) {
+      <p>Noch nichts berührt</p>
+    }
+    @if (addMemoForm.controls.title.invalid || addMemoForm.controls.content.invalid) {
+      <span class="text-warning text-sm">Stelle sicher, dass der Titel min. 1 Wort enthält und der content 3.</span>
+    }
+  }
+</div>

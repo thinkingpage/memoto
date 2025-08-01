@@ -1,5 +1,5 @@
 import {Component, input, output, signal} from '@angular/core';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MemoModel} from '../../models/memo.model';
 
 @Component({
@@ -17,32 +17,35 @@ export class MemoAddMemo {
   userInputMessage = signal<string>("");
 
   addMemoForm = new FormGroup({
-    title: new FormControl(""),
-    content: new FormControl("")
+    title: new FormControl("", [Validators.required, Validators.minLength(1)]),
+    content: new FormControl("", [Validators.required, Validators.minLength(3)])
   })
 
+  get title() {
+    return this.addMemoForm.get("title")?.value ?? "";
+  }
+
+  get content() {
+    return this.addMemoForm.get("content")?.value ?? "";
+  }
+
   formMemo() {
-
     if(this.addMemoForm.invalid) {
-      this.addMemoForm.markAllAsTouched();
       this.userInputMessage.set("Need Title and Content!");
       return;
     }
 
-    let title: string = this.addMemoForm.get("title")?.value ?? "";
-    let content: string = this.addMemoForm.get("content")?.value ?? ""
-
-    if(title.length == 0 && content.length == 0) {
+    if(this.title.length == 0 && this.content.length == 0) {
       this.userInputMessage.set("Need Title and Content!");
-      console.log("Need Title and Content!")
-      console.log("\n" + this.userInputMessage)
       return;
     }
+
     const memo: MemoModel = {
-      title: title,
-      content: content
+      title: this.title,
+      content: this.content
     };
 
     this.emitForm.emit(memo);
+    this.addMemoForm.reset();
   }
 }

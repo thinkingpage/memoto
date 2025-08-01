@@ -4,14 +4,15 @@
       @for (memo of memosFromDB(); track memo.id) {
         <div class="flex-none card my-2 card-sm card-border bg-base-200">
           <div class="card-body flex-row">
-            <h2 class="card-title w-11/12">{{ memo.title }}</h2>
-            <div class="w-1/12 text-center">
-              <button>{{ memo.id }}</button>
+            <h2 class="card-title w-[50%]">{{ memo.title }}</h2>
+            <div class="flex flex-col btn btn-xs btn-primary w-[25%]">
+              <button (click)="mbid(memo.id)">show {{ memo.id }}</button>
+            </div>
+            <div class="flex flex-col btn btn-xs btn-primary w-[25%]">
+              <button (click)="deleteMemoById(memo.id)">delete {{ memo.id }}</button>
             </div>
           </div>
         </div>
-      } @empty {
-        what?
       }
     </div>
   }
