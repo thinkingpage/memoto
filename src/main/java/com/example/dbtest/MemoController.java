@@ -48,8 +48,10 @@ public class MemoController {
 
 
     @PostMapping("/memos")
-    public void addMemo(@RequestBody Memo memo) {
-        memoService.addMemo(memo);
+    public ResponseEntity<Memo> addMemo(@RequestBody Memo memo) {
+        memo.setId(null);
+        Memo savedMemo = memoService.addMemo(memo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedMemo);
     }
 
 

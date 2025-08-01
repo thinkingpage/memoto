@@ -40,7 +40,7 @@ export class MemoAddMemo {
       return;
     }
 
-    const memo: MemoModel = {
+    let memo: MemoModel = {
       title: this.title,
       content: this.content
     };

@@ -42,8 +42,8 @@ public class MemoService {
     }
 
     @Transactional
-    public void addMemo(Memo memo) {
-        memoRepository.save(memo);
+    public Memo addMemo(Memo memo) {
+        return memoRepository.save(memo);
     }
 
     public Memo findMemoById(long id) {

@@ -9,6 +9,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {MemoItemComponent} from './components/memos/memo-item.component';
 import {MemoAddMemo} from './components/memos/memo-add-memo';
 import {MemoAllMemosComponent} from './components/memos/memo-all-memos.component';
+import {map} from 'rxjs';
 
 
 @Component({
@@ -73,14 +74,12 @@ export class App implements OnInit {
 
   addMemo(memo: MemoModel) {
 
-    this.memos.update( value => {
-        return [...value, memo];
-      }
-    )
-
     this.memoService.addMemo(memo).subscribe({
         next: (response: MemoModel) => {
-          console.log(response);
+          this.memos.update(value => {
+              return [...value, response];
+            }
+          )
         },
         error: (error: HttpErrorResponse) => {
           console.log(error.message);
@@ -89,16 +88,17 @@ export class App implements OnInit {
     )
   }
 
+  // TODO: fix this.
+  // https://www.youtube.com/watch?v=wcn_8UnYBEw
+  // PROBLEM gefunden! splice() -> ARRAY-INDEX angeben, die id nützt in dem fall nix. man muss die memo.id vergleichen der vlaue!
   memoDeleteById(id: number): void {
-
-    // TODO: Frage: Wie kann man nur die Values zuweisen?
-    this.memos.update( value => {
-      return value;
-      })
 
     this.memoService.deleteMemo(id).subscribe({
       next: () => {
-        this.memoService.getMemos();
+        this.memos.update(value => {
+            return value.filter(memo => memo.id !== id);
+          }
+        )
       },
       error: (error: HttpErrorResponse) => console.log(error.message),
     });
@@ -107,7 +107,7 @@ export class App implements OnInit {
   showMemoByIdComponent() {
     // this.showMemoById.update(value => !value);
   }
-  //TODO: Rename...
+
   memoById(id: number): void {
     this.memoService.getMemo(id).subscribe({
       next: (memo: MemoModel) => {
