@@ -10,6 +10,7 @@ import {MemoItemComponent} from './components/memos/memo-item.component';
 import {MemoAddMemo} from './components/memos/memo-add-memo';
 import {MemoAllMemosComponent} from './components/memos/memo-all-memos.component';
 import {map} from 'rxjs';
+import {MenuComponent} from './keycloak.service';
 
 
 @Component({
@@ -21,7 +22,8 @@ import {map} from 'rxjs';
     MemoAllMemosComponent,
     FooterComponent,
     MemoAddMemo,
-    MemoItemComponent
+    MemoItemComponent,
+    MenuComponent
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
@@ -35,6 +37,7 @@ export class App implements OnInit {
   memos = signal<MemoModel[]>([]);
   memo = signal<MemoModel | null>(null);
 
+
   constructor(private memoService: MemoService) {}
 
   // TODO (future) lesser network bandwidth -> update changes locally.
@@ -47,6 +50,10 @@ export class App implements OnInit {
 
   ngOnInit() {
     this.loadMemos();
+  }
+
+  login() {
+    this.memoService.login().subscribe({})
   }
 
   loadMemos() {
@@ -88,9 +95,6 @@ export class App implements OnInit {
     )
   }
 
-  // TODO: fix this.
-  // https://www.youtube.com/watch?v=wcn_8UnYBEw
-  // PROBLEM gefunden! splice() -> ARRAY-INDEX angeben, die id nützt in dem fall nix. man muss die memo.id vergleichen der vlaue!
   memoDeleteById(id: number): void {
 
     this.memoService.deleteMemo(id).subscribe({
@@ -102,10 +106,6 @@ export class App implements OnInit {
       },
       error: (error: HttpErrorResponse) => console.log(error.message),
     });
-  }
-
-  showMemoByIdComponent() {
-    // this.showMemoById.update(value => !value);
   }
 
   memoById(id: number): void {

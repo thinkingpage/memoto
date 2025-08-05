@@ -7,7 +7,7 @@ import {MemoModel} from './models/memo.model';
   providedIn: 'root'
 })
 export class MemoService {
-  private apiServerUrl = "http://localhost:8080";
+  private apiServerUrl = "http://localhost:8081";
 
   constructor(private http: HttpClient) { }
   public getMemos(): Observable<MemoModel[]> {
@@ -24,5 +24,9 @@ export class MemoService {
 
   public deleteMemo(memoId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/memos/${memoId}`)
+  }
+
+  public login(): Observable<Object> {
+    return this.http.get(`${this.apiServerUrl}/login`)
   }
 }
