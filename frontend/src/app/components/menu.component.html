@@ -1,4 +1,11 @@
 <div class="w-96 mb-8 mt-4 mx-auto flex gap-x-6">
   <a (click)="login()" class="btn btn-ghost link-primary">login</a>
   <a (click)="logout()" class="btn btn-ghost link-primary">logout</a>
+
+
+  @if(userProfileService.profile(); as user ) {
+    <span>
+    Hallo, {{ user.username }}
+    </span>
+  }
 </div>

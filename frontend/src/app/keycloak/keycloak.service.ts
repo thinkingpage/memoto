@@ -1,18 +1,14 @@
-import {Component, effect, inject} from '@angular/core';
+import {effect, inject, Injectable} from '@angular/core';
 import Keycloak from 'keycloak-js';
 import {KEYCLOAK_EVENT_SIGNAL, KeycloakEventType, ReadyArgs, typeEventArgs} from 'keycloak-angular';
 
-@Component({
-  selector: 'app-menu',
-  templateUrl: '../menu.component.html'
-})
 
-export class MenuComponent {
+@Injectable({ providedIn: 'root' })
+export class KeycloakService {
   private readonly keycloak = inject(Keycloak)
 
   authenticated: boolean = false;
   keycloakStatus: string | undefined;
-  profile: object | undefined;
 
   constructor() {
     const keycloakSignal = inject(KEYCLOAK_EVENT_SIGNAL);
@@ -39,23 +35,6 @@ export class MenuComponent {
         console.log("----- NOT AUTHENTICATED -----")
         console.log(keycloakEvent);
       }
-
-
-      if (keycloakEvent.type === KeycloakEventType.Ready && this.keycloak.authenticated) {
-        (async () => {
-          const profile = await this.keycloak.loadUserProfile();
-        })();
-      }
     });
-  }
-
-  login()
-  {
-    this.keycloak.login();
-  }
-
-  logout()
-  {
-    this.keycloak.logout();
   }
 }

@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, Inject, OnInit, signal} from '@angular/core';
 
 import {HeaderComponent} from './components/header/header.component';
 import {FooterComponent} from './components/footer/footer.component';
@@ -9,8 +9,9 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {MemoItemComponent} from './components/memos/memo-item.component';
 import {MemoAddMemo} from './components/memos/memo-add-memo';
 import {MemoAllMemosComponent} from './components/memos/memo-all-memos.component';
-import {map} from 'rxjs';
-import {MenuComponent} from './keycloak/keycloak.service';
+import {UserProfileService} from './keycloak/user-profile.service';
+import {MenuComponent} from './components/menu.component';
+import {KeycloakService} from './keycloak/keycloak.service';
 
 
 @Component({
@@ -18,46 +19,34 @@ import {MenuComponent} from './keycloak/keycloak.service';
   standalone: true,
   imports: [
     HeaderComponent,
+    MenuComponent,
     FilterComponent,
     MemoAllMemosComponent,
     FooterComponent,
     MemoAddMemo,
     MemoItemComponent,
-    MenuComponent
   ],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })
 export class App implements OnInit {
   protected readonly title = signal('memoto');
+  // keycloakservice = inject(KeycloakService);
 
   showAddMemoComponent = signal<boolean>(false);
   showMemoById = signal<boolean>(false);
   showAllMemoComponent = signal<boolean>(false);
   memos = signal<MemoModel[]>([]);
   memo = signal<MemoModel | null>(null);
-
+  userProfileService = Inject(UserProfileService);
 
   constructor(private memoService: MemoService) {}
-
-  // TODO (future) lesser network bandwidth -> update changes locally.
-  // (https://stackoverflow.com/questions/69800897/angular-10-reload-after-delete)
-
-
-  // 1. onInit load all Memos.
-  // 2. if needed (copy those memos?) and change the array so that the ui will update without manual reload
-  //    for this I need to
 
   ngOnInit() {
     this.loadMemos();
   }
 
-  login() {
-    this.memoService.login().subscribe({})
-  }
-
   loadMemos() {
-    // TODO: broski: maybe this part shouldn't be subscribed to, since it actually "can't wait"? it's needed (or at least a part of it)
     this.memoService.getMemos().subscribe({
       next: (response: MemoModel[]) => {
         this.memos.set(response);

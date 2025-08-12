@@ -1,20 +1,35 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, effect, signal } from '@angular/core';
 import Keycloak from 'keycloak-js';
+import { KEYCLOAK_EVENT_SIGNAL, KeycloakEventType, ReadyArgs, typeEventArgs } from 'keycloak-angular';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class UserProfileService {
   private keycloak = inject(Keycloak);
+  private keycloakSignal = inject(KEYCLOAK_EVENT_SIGNAL);
+  profile = signal<Keycloak.KeycloakProfile | null> (null);
 
-  profile: Keycloak.KeycloakProfile | null = null;
 
-  async loadUserProfile(): Promise<void> {
+  constructor() {
+    effect(() => {
+      const event = this.keycloakSignal();
 
+      console.log("in here?");
+
+      if (event.type === KeycloakEventType.Ready && this.keycloak.authenticated) {
+        this.loadUserProfile();
+      }
+
+      else if (event.type === KeycloakEventType.AuthLogout) {
+        this.profile.set(null);
+      }
+    });
+  }
+
+
+  async loadUserProfile() {
     if (this.keycloak.authenticated) {
-      this.profile = await this.keycloak.loadUserProfile();
-    } else {
-      this.profile = null;
+      const p = await this.keycloak.loadUserProfile();
+      this.profile.set(p);
     }
   }
 }
