@@ -10,7 +10,7 @@ import {MemoItemComponent} from './components/memos/memo-item.component';
 import {MemoAddMemo} from './components/memos/memo-add-memo';
 import {MemoAllMemosComponent} from './components/memos/memo-all-memos.component';
 import {map} from 'rxjs';
-import {MenuComponent} from './keycloak.service';
+import {MenuComponent} from './keycloak/keycloak.service';
 
 
 @Component({
