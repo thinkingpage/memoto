@@ -31,14 +31,16 @@ import {KeycloakService} from './keycloak/keycloak.service';
 })
 export class App implements OnInit {
   protected readonly title = signal('memoto');
-  // keycloakservice = inject(KeycloakService);
-
   showAddMemoComponent = signal<boolean>(false);
   showMemoById = signal<boolean>(false);
   showAllMemoComponent = signal<boolean>(false);
   memos = signal<MemoModel[]>([]);
   memo = signal<MemoModel | null>(null);
-  userProfileService = Inject(UserProfileService);
+  errorMessage = signal<string | null>(null);
+
+  // keycloakservice = inject(KeycloakService);
+  // userProfileService = inject(UserProfileService);
+
 
   constructor(private memoService: MemoService) {}
 
@@ -78,7 +80,9 @@ export class App implements OnInit {
           )
         },
         error: (error: HttpErrorResponse) => {
-          console.log(error.message);
+          console.log("errormessage: " + error.message);
+          this.errorMessage.set(error.message);
+          return error;
         },
       }
     )
@@ -93,7 +97,11 @@ export class App implements OnInit {
           }
         )
       },
-      error: (error: HttpErrorResponse) => console.log(error.message),
+      error: (error: HttpErrorResponse) => {
+        console.log("errormessage: " + error.message);
+        this.errorMessage.set(error.message);
+        return error;
+      },
     });
   }
 

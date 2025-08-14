@@ -24,7 +24,7 @@ import java.util.Map;
 @RestController
 public class MemoController {
 
-
+    // TODO: do not just return .OK. ->
     @Autowired
     MemoService memoService;
 

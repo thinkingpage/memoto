@@ -8,4 +8,9 @@
     Hallo, {{ user.username }}
     </span>
   }
+
+  @if(errorMessage()) {
+    <p class="accent-error">ERROR: {{errorMessage()}}</p>
+  }
+
 </div>

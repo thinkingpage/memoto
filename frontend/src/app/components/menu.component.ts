@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import Keycloak from 'keycloak-js';
 import {UserProfileService} from '../keycloak/user-profile.service';
 
@@ -11,7 +11,8 @@ import {UserProfileService} from '../keycloak/user-profile.service';
 export class MenuComponent {
 
   private readonly keycloak = inject(Keycloak);
-  userProfileService = inject(UserProfileService);
+  protected readonly userProfileService = inject(UserProfileService);
+  errorMessage = input();
 
   login() {
     this.keycloak.login();
@@ -20,6 +21,4 @@ export class MenuComponent {
   logout() {
     this.keycloak.logout();
   }
-
-  protected readonly Object = Object;
 }

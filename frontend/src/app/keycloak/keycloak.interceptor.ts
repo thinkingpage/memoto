@@ -1,22 +1,20 @@
-// import { HttpInterceptorFn } from '@angular/common/http';
-// import { inject } from '@angular/core';
-// import Keycloak from 'keycloak-js';
-//
-// export const keycloakHttpInterceptor: HttpInterceptorFn = (req, next) => {
-//   const keycloak = inject(Keycloak);
-//
-//   const excludedUrls = ['/public'];
-//   const shouldExclude = excludedUrls.some(url => req.url.includes(url));
-//
-//   if (shouldExclude || !keycloak.authenticated || !keycloak.token) {
-//     return next(req);
-//   }
-//
-//   const authReq = req.clone({
-//     setHeaders: {
-//       Authorization: `Bearer ${keycloak.token}`
-//     }
-//   });
-//
-//   return next(authReq);
-// };
+import { Injectable } from '@angular/core';
+import { HttpInterceptor, HttpRequest, HttpHandler } from '@angular/common/http';
+import Keycloak from 'keycloak-js';
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+  constructor(private keycloak: Keycloak) {}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    const token = this.keycloak.token;
+    if (token) {
+      req = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+    }
+    return next.handle(req);
+  }
+}

@@ -1,5 +1,5 @@
 <app-header></app-header>
-<app-menu></app-menu>
+<app-menu [errorMessage]="errorMessage()"></app-menu>
 <app-filter (triggerAddForm)="activateAddForm()" (triggerMemoList)="activateMemoList()"></app-filter>
 <app-all-memos (emitMemoIdToDelete)="memoDeleteById($event)" (emitMemoId)="memoById($event)" [showAllMemos]="showAllMemoComponent()" [memosFromDB]="memos()"></app-all-memos>
 <app-memo-item [memoFromBackend]="memo()"></app-memo-item>

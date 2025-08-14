@@ -18,32 +18,4 @@ public class DbtestApplication {
         SpringApplication.run(DbtestApplication.class, args);
         Logger logger = LoggerFactory.getLogger(DbtestApplication.class);
     }
-
-    @Bean
-    public CorsFilter corsFilter() {
-
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.setAllowedOrigins(List.of("http://localhost:4200"));
-        config.setAllowedMethods(List.of("POST", "PUT", "PATCH", "GET", "OPTIONS", "DELETE"));
-
-        config.setAllowedHeaders(List.of(
-                "Authorization",
-                "Accept",
-                "X-Requested-With",
-                "Content-Type",
-                "Access-Control-Request-Method",
-                "Access-Control-Request-Headers"));
-
-        config.setExposedHeaders(List.of(
-                "Access-Control-Allow-Origin",
-                "Access-Control-Allow-Credentials"));
-
-        config.setMaxAge(3600L);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-
-        return new CorsFilter(source);
-    }
 }
