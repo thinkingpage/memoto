@@ -1,3 +1,18 @@
+CREATE USER keycloak_username WITH PASSWORD 'keycloak_password';
+CREATE DATABASE keycloak OWNER keycloak_username;
+
+CREATE DATABASE memodb OWNER postgres;
+
+\c memodb;
+
+CREATE TABLE IF NOT EXISTS memo (
+    id BIGSERIAL PRIMARY KEY,
+    title VARCHAR(255),
+    content VARCHAR(1000),
+    created_on TIMESTAMP,
+    last_updated_on TIMESTAMP
+    );
+
 INSERT INTO memo (title,content,created_on)
 VALUES
     ('lectus. Cum sociis natoque penatibus','ac tellus. Suspendisse sed dolor. Fusce mi lorem, vehicula et, rutrum eu, ultrices sit amet, risus. Donec nibh enim, gravida sit amet, dapibus id, blandit at, nisi. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin vel nisl. Quisque','2023-10-14 09:00:15'),
