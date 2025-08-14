@@ -1,17 +1,14 @@
-package com.example.dbtest.service;
+package com.example.memoto.service;
 
-import com.example.dbtest.exception.MemoNotFoundException;
-import com.example.dbtest.model.Memo;
-import com.example.dbtest.repository.MemoRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.example.memoto.exception.MemoNotFoundException;
+import com.example.memoto.model.Memo;
+import com.example.memoto.repository.MemoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
-import java.util.Date;
 import java.util.List;
 
 
@@ -21,7 +18,6 @@ public class MemoService {
 
     private final MemoRepository memoRepository;
 
-    @Autowired
     public MemoService(MemoRepository memoRepository) {
         this.memoRepository = memoRepository;
     }

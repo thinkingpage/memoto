@@ -1,14 +1,13 @@
-package com.example.dbtest;
+package com.example.memoto;
 
-import com.example.dbtest.model.Memo;
-import com.example.dbtest.service.MemoService;
+import com.example.memoto.model.Memo;
+import com.example.memoto.service.MemoService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +23,7 @@ import java.util.Map;
 @RestController
 public class MemoController {
 
-    // TODO: do not just return .OK. ->
-    @Autowired
+    // TODO: do not just return .OK. -> better handling in angular
     MemoService memoService;
 
     @PersistenceContext

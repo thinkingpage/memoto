@@ -1,6 +1,6 @@
-package com.example.dbtest.repository;
+package com.example.memoto.repository;
 
-import com.example.dbtest.model.Memo;
+import com.example.memoto.model.Memo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +20,6 @@ public interface MemoRepository extends JpaRepository<Memo, Integer> {
 
     List<Memo> findByTitleContainingAndCreatedOnBetween(String title, Instant start, Instant end);
 
-    // Das hier klappt laut Debugger. Es wird trotzdem nix im Web angezeigt.
     @Query(value="select m from Memo m where m.title like :title "
             + "and m.createdOn >= :start "
             + "and m.createdOn <= :end")

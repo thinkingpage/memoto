@@ -1,4 +1,4 @@
-package com.example.dbtest.model;
+package com.example.memoto.model;
 
 import jakarta.persistence.*;
 import lombok.Data;

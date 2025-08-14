@@ -1,4 +1,4 @@
-package com.example.dbtest;
+package com.example.memoto;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
