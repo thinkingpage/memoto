@@ -1,5 +1,6 @@
 package com.example.memoto.service;
 
+import com.example.memoto.dto.MemoDTO;
 import com.example.memoto.exception.MemoNotFoundException;
 import com.example.memoto.model.Memo;
 import com.example.memoto.repository.MemoRepository;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -29,6 +31,12 @@ public class MemoService {
 
     public List<Memo> findAllMemos() {
         return memoRepository.findAll();
+    }
+
+    public List<MemoDTO> findAllMemosDTO() {
+        return memoRepository.findAll().stream().
+                map(MemoDTO::new).
+                collect(Collectors.toList());
     }
 
     @Transactional

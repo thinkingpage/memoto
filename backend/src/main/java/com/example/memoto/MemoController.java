@@ -1,13 +1,17 @@
 package com.example.memoto;
 
+import com.example.memoto.dto.MemoDTO;
 import com.example.memoto.model.Memo;
+import com.example.memoto.model.User;
 import com.example.memoto.service.MemoService;
+import com.example.memoto.service.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +29,12 @@ public class MemoController {
 
     // TODO: do not just return .OK. -> better handling in angular
     MemoService memoService;
+    UserService userService;
+
+    public MemoController(MemoService memoService, UserService userService) {
+        this.memoService = memoService;
+        this.userService = userService;
+    }
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -32,6 +42,12 @@ public class MemoController {
     @GetMapping("/memos")
     public ResponseEntity<List<Memo>> findAllMemos() {
         List<Memo> memos = memoService.findAllMemos();
+        return new ResponseEntity<>(memos, HttpStatus.OK);
+    }
+
+    @GetMapping("/memosdto")
+    public ResponseEntity<List<MemoDTO>> findAllMemosDTO() {
+        List<MemoDTO> memos = memoService.findAllMemosDTO();
         return new ResponseEntity<>(memos, HttpStatus.OK);
     }
 
@@ -48,7 +64,9 @@ public class MemoController {
 
 
     @PostMapping("/memos")
-    public ResponseEntity<Memo> addMemo(@RequestBody Memo memo) {
+    public ResponseEntity<Memo> addMemo(@RequestBody Memo memo, Authentication authentication) {
+        User currentUser = userService.getCurrentUser(authentication);
+        memo.setUser(currentUser);
         memo.setId(null);
         Memo savedMemo = memoService.addMemo(memo);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedMemo);

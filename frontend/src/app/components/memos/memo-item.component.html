@@ -1,15 +1,25 @@
-<div class="w-96 mx-auto">
-  @if (memoFromBackend() !== null) {
-    <div class="mt-2">
-      <div class="flex-none card my-2 card-sm card-border bg-base-200">
-        <div class="card-body flex-row">
-          <h2 class="card-title w-1/2"> {{memoFromBackend()?.title}}</h2>
-          <h2 class="card-title w-1/2"> {{memoFromBackend()?.content}}</h2>
-          <div class="w-1/12 text-center">
-            <button></button>
-          </div>
-        </div>
+@if (memoFromBackend() !== null) {
+  <div class="mx-auto">
+    <div class="flex bg-blend-color-burn opacity-80 flex-col filter w-[95vw] mx-auto my-6 backdrop-blur-xl border border-amber-100 rounded-lg">
+      <div class="mx-3 mb-0 border-b border-slate-200 pt-3 pb-2 px-1">
+    <span class="text-sm font-medium text-slate-600">
+      <a>user{{ memoFromBackend()?.id }}</a>
+    </span>
+      </div>
+
+      <div class="p-4">
+        <h5 class="mb-2 text-slate-800 text-xl font-semibold">
+          {{ memoFromBackend()?.title }}
+        </h5>
+        <p class="text-slate-600 leading-normal font-light">
+          {{ memoFromBackend()?.content }}
+        </p>
+      </div>
+      <div class="mx-3 border-t border-slate-200 pb-3 pt-2 px-1">
+    <span class="text-sm text-slate-600 font-medium">
+      {{ memoFromBackend()?.createdOn }}
+    </span>
       </div>
     </div>
-  }
-</div>
+  </div>
+}

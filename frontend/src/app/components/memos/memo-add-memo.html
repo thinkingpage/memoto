@@ -1,4 +1,4 @@
-<div class="w-96 mx-auto">
+<div class="mx-auto">
   @if (showAddMemoForm()) {
     <form [formGroup]="addMemoForm" (ngSubmit)="formMemo()" name="formContainer" class="mt-2 grid gap-y-2">
       <input formControlName="title" type="text" name="title" placeholder="title" class="input input-primary"

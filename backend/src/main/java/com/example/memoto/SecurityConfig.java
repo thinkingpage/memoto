@@ -20,10 +20,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> {})
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+//                .cors(cors -> {})
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/memos/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/memos").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/memosdto/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/memos").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/memos/**").authenticated()
                         .anyRequest().denyAll()

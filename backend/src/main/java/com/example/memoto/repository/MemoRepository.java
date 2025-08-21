@@ -1,6 +1,7 @@
 package com.example.memoto.repository;
 
 import com.example.memoto.model.Memo;
+import com.example.memoto.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -30,3 +31,4 @@ public interface MemoRepository extends JpaRepository<Memo, Integer> {
     );
 
 }
+

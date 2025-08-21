@@ -4,8 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -19,10 +18,11 @@ public class Memo {
     private String title;
     @Column(name="content",length = 1000)
     private String content;
-
     @CreationTimestamp
-    private Instant createdOn;
-
+    private LocalDateTime createdOn;
     @UpdateTimestamp
-    private Instant lastUpdatedOn;
+    private LocalDateTime lastUpdatedOn;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

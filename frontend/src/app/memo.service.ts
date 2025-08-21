@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {MemoModel} from './models/memo.model';
+import {MemoDTO} from './models/memo.dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,10 @@ export class MemoService {
   constructor(private http: HttpClient) { }
   public getMemos(): Observable<MemoModel[]> {
     return this.http.get<MemoModel[]>(`${this.apiServerUrl}/memos`)
+  }
+
+  public getMemosDTO(): Observable<MemoDTO[]> {
+    return this.http.get<MemoDTO[]>(`${this.apiServerUrl}/memosdto`)
   }
 
   public addMemo(memo: MemoModel): Observable<MemoModel> {

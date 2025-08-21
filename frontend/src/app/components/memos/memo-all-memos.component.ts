@@ -1,6 +1,7 @@
 import {MemoModel} from '../../models/memo.model';
 import {Component, input, output, signal, WritableSignal} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MemoDTO} from '../../models/memo.dto.model';
 
 @Component({
   selector: 'app-all-memos',
@@ -12,9 +13,25 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 })
 export class MemoAllMemosComponent {
   showAllMemos = input<boolean>();
-  memosFromDB = input<MemoModel[]>();
+  memosFromDB = input<MemoDTO[]>();
   emitMemoId = output<number>();
   emitMemoIdToDelete = output<number>();
+
+  // goal: save custom color variants in database.
+  // colorVariants should have a font color too
+    //
+
+  private colorVariants = [
+    'bg-[#d5aa92]',
+    'bg-[#b8f5d4]',
+    'bg-[#cab988]'
+  ]
+
+  backgroundColorGenerator(id: number | undefined) {
+    if(id) {
+      return this.colorVariants[(id % this.colorVariants.length)];
+    } return;
+  }
 
 
   // TODO: fix this!
@@ -31,5 +48,4 @@ export class MemoAllMemosComponent {
       this.emitMemoIdToDelete.emit(id);
     }
   }
-
 }

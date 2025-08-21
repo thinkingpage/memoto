@@ -1,25 +1,3 @@
-<svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_1567_410)" filter="url(#filter0_dd_1567_410)">
-<path d="M14.7407 8.74072L53.2592 8.74072L53.2592 37.6296L24.3704 37.6296L24.3704 18.3704L43.6296 18.3704V32.8148L48.4444 32.8148L48.4444 13.5555L19.5555 13.5555L19.5555 42.4444C32.7177 42.4444 40.0971 42.4444 53.2592 42.4444V47.2592L14.7407 47.2592L14.7407 8.74072ZM38.8148 32.8148V23.1852L29.1852 23.1852L29.1852 32.8148H38.8148Z" fill="#C7C7C7"/>
-</g>
-<defs>
-<filter id="filter0_dd_1567_410" x="0" y="0" width="68" height="68" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="2"/>
-<feGaussianBlur stdDeviation="1.5"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.3 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1567_410"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feMorphology radius="4" operator="dilate" in="SourceAlpha" result="effect2_dropShadow_1567_410"/>
-<feOffset dy="6"/>
-<feGaussianBlur stdDeviation="5"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"/>
-<feBlend mode="normal" in2="effect1_dropShadow_1567_410" result="effect2_dropShadow_1567_410"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow_1567_410" result="shape"/>
-</filter>
-<clipPath id="clip0_1567_410">
-<rect width="40" height="40" fill="white" transform="translate(14 8)"/>
-</clipPath>
-</defs>
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.11133 1.11108L58.8891 1.11108L58.8891 44.4444L15.5558 44.4444L15.5558 15.5555L44.4447 15.5555L44.4447 37.2222H51.6669L51.6669 8.33331L8.33355 8.33331L8.33355 51.6666C28.0767 51.6666 39.1459 51.6666 58.8891 51.6666V58.8889L1.11133 58.8889L1.11133 1.11108ZM37.2224 37.2222L37.2224 22.7778L22.778 22.7778L22.778 37.2222L37.2224 37.2222Z" fill="#564922"/>
 </svg>

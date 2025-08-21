@@ -12,6 +12,7 @@ import {MemoAllMemosComponent} from './components/memos/memo-all-memos.component
 import {UserProfileService} from './keycloak/user-profile.service';
 import {MenuComponent} from './components/menu.component';
 import {KeycloakService} from './keycloak/keycloak.service';
+import {MemoDTO} from './models/memo.dto.model';
 
 
 @Component({
@@ -35,28 +36,52 @@ export class App implements OnInit {
   showMemoById = signal<boolean>(false);
   showAllMemoComponent = signal<boolean>(false);
   memos = signal<MemoModel[]>([]);
+  memosDto = signal<MemoDTO[]>([]);
   memo = signal<MemoModel | null>(null);
   errorMessage = signal<string | null>(null);
-
+  userColor = signal<string>('#ece3ca');
   // keycloakservice = inject(KeycloakService);
   // userProfileService = inject(UserProfileService);
 
-
-  constructor(private memoService: MemoService) {}
+  constructor(private memoService: MemoService) {
+  }
 
   ngOnInit() {
     this.loadMemos();
   }
 
   loadMemos() {
-    this.memoService.getMemos().subscribe({
-      next: (response: MemoModel[]) => {
-        this.memos.set(response);
-      },
+    this.memoService.getMemosDTO().subscribe({
       error: (error: HttpErrorResponse) => {
         console.log(error.message);
+      },
+      next: (response: MemoDTO[]) => {
+        this.memosDto.set(response);
+        // TODO: Keyword - DTO. Hier werden 2 Entitys zurückgegeben. Das ist verwirrend und führt zu Fehlern bei der .html
+        console.log(response);
+        // this.memos().forEach()
+        console.log(this.memosDto()[0].createdOn);
       }
-    });
+    })
+  }
+
+  get svgBackground() {
+    return this.getNoiseSVG(this.userColor());
+  }
+
+  getNoiseSVG(color: string): string {
+    const svg = `
+      <svg width="650" height="500" xmlns="http://www.w3.org/2000/svg">
+        <filter id='roughpaper' x='0%' y='0%' width='100%' height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency='1' result='noise' numOctaves="5" />
+          <feDiffuseLighting in='noise' lighting-color='${color}' surfaceScale='2'>
+              <feDistantLight azimuth='45' elevation='60' />
+          </feDiffuseLighting>
+        </filter>
+        <rect x="0" y="0" width="100%" height="100%" filter="url(#roughpaper)" fill="none"/>
+      </svg>
+    `;
+    return `url('data:image/svg+xml;utf8,${encodeURIComponent(svg)}')`;
   }
 
   activateAddForm() {
@@ -65,7 +90,7 @@ export class App implements OnInit {
 
   activateMemoList() {
     this.showAllMemoComponent.update(value => !value);
-    if(!this.showAllMemoComponent()) {
+    if (!this.showAllMemoComponent()) {
       return;
     }
   }
