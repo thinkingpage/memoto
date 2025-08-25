@@ -1,6 +1,6 @@
 <div class="">
 
-  @if (showAllMemos()) {
+<!--  @if (showAllMemos()) {-->
     @for (memo of memosFromDB(); track memo.id) {
     <div [class]="backgroundColorGenerator(memo.id)"
       class="flex backdrop-hue-rotate-90 opacity-80 flex-col filter w-[95vw] mx-auto my-6 backdrop-blur-xl border border-amber-100 rounded-lg">
@@ -25,11 +25,13 @@
         <div class="flex flex-col w-[25%] text-[blue]">
           <button (click)="mbid(memo.id)">show {{ memo.id }}</button>
         </div>
+        @if(userProfileService.profile()) {
         <div class="flex flex-col w-[25%] text-[red]">
           <button (click)="deleteMemoById(memo.id)">delete {{ memo.id }}</button>
         </div>
+        }
       </div>
     </div>
     }
-  }
+<!--  }-->
 </div>

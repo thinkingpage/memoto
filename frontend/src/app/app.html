@@ -22,12 +22,16 @@
     <app-header></app-header>
     <app-menu [errorMessage]="errorMessage()"></app-menu>
     <app-filter (triggerAddForm)="activateAddForm()" (triggerMemoList)="activateMemoList()"></app-filter>
-    <app-all-memos (emitMemoIdToDelete)="memoDeleteById($event)" (emitMemoId)="memoById($event)"
-                   [showAllMemos]="showAllMemoComponent()" [memosFromDB]="memosDto()">
+    <app-memo-add-memo [showAddMemoForm]="showAddMemoComponent()" (emitForm)="addMemo($event)"></app-memo-add-memo>
+    <app-all-memos
+      (emitMemoIdToDelete)="memoDeleteById($event)"
+      (emitMemoId)="memoById($event)"
+      [memosFromDB]="memosDto()"
+    >
     </app-all-memos>
     <app-memo-item [memoFromBackend]="memo()"></app-memo-item>
-    <app-memo-add-memo [showAddMemoForm]="showAddMemoComponent()" (emitForm)="addMemo($event)"></app-memo-add-memo>
     <app-footer></app-footer>
+
 
 
     <!-- Firefox und Vivaldi rendern anders. Chromium ist viel "sanfter". Man muss irgend eine Änderung am DOM erzwingen -->
@@ -82,3 +86,7 @@
     overflow: hidden;
   }
 </style>
+<!--
+  // all-memos
+  [showAllMemos]="showAllMemoComponent()" und all-memos component
+-->

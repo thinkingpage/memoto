@@ -8,26 +8,19 @@ import com.example.memoto.service.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
-
-
 import java.util.List;
 import java.util.Map;
-
-
-// https://docs.spring.io/spring-data/relational/reference/repositories/core-concepts.html
-// https://docs.spring.io/spring-data/jpa/reference/jpa/getting-started.html
+import java.util.stream.Collectors;
 
 @RestController
 public class MemoController {
 
-    // TODO: do not just return .OK. -> better handling in angular
     MemoService memoService;
     UserService userService;
 
@@ -47,7 +40,10 @@ public class MemoController {
 
     @GetMapping("/memosdto")
     public ResponseEntity<List<MemoDTO>> findAllMemosDTO() {
-        List<MemoDTO> memos = memoService.findAllMemosDTO();
+        List<MemoDTO> memos = memoService.findAllMemos()
+                .stream()
+                .map(MemoDTO::new)
+                .collect(Collectors.toList());
         return new ResponseEntity<>(memos, HttpStatus.OK);
     }
 
@@ -61,7 +57,6 @@ public class MemoController {
         memoService.deleteMemoById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
     @PostMapping("/memos")
     public ResponseEntity<Memo> addMemo(@RequestBody Memo memo, Authentication authentication) {

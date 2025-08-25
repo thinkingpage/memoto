@@ -1,12 +1,12 @@
 import { Injectable, inject, effect, signal } from '@angular/core';
 import Keycloak from 'keycloak-js';
-import { KEYCLOAK_EVENT_SIGNAL, KeycloakEventType, ReadyArgs, typeEventArgs } from 'keycloak-angular';
+import { KEYCLOAK_EVENT_SIGNAL, KeycloakEventType} from 'keycloak-angular';
 
 @Injectable({ providedIn: 'root' })
 export class UserProfileService {
   private keycloak = inject(Keycloak);
   private keycloakSignal = inject(KEYCLOAK_EVENT_SIGNAL);
-  profile = signal<Keycloak.KeycloakProfile | null> (null);
+  public profile = signal<Keycloak.KeycloakProfile | null> (null);
 
 
   constructor() {

@@ -1,4 +1,4 @@
-import {Component, inject, Inject, OnInit, signal} from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 
 import {HeaderComponent} from './components/header/header.component';
 import {FooterComponent} from './components/footer/footer.component';
@@ -9,9 +9,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {MemoItemComponent} from './components/memos/memo-item.component';
 import {MemoAddMemo} from './components/memos/memo-add-memo';
 import {MemoAllMemosComponent} from './components/memos/memo-all-memos.component';
-import {UserProfileService} from './keycloak/user-profile.service';
 import {MenuComponent} from './components/menu.component';
-import {KeycloakService} from './keycloak/keycloak.service';
 import {MemoDTO} from './models/memo.dto.model';
 
 
@@ -40,8 +38,6 @@ export class App implements OnInit {
   memo = signal<MemoModel | null>(null);
   errorMessage = signal<string | null>(null);
   userColor = signal<string>('#ece3ca');
-  // keycloakservice = inject(KeycloakService);
-  // userProfileService = inject(UserProfileService);
 
   constructor(private memoService: MemoService) {
   }
@@ -57,10 +53,6 @@ export class App implements OnInit {
       },
       next: (response: MemoDTO[]) => {
         this.memosDto.set(response);
-        // TODO: Keyword - DTO. Hier werden 2 Entitys zurückgegeben. Das ist verwirrend und führt zu Fehlern bei der .html
-        console.log(response);
-        // this.memos().forEach()
-        console.log(this.memosDto()[0].createdOn);
       }
     })
   }

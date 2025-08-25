@@ -1,5 +1,5 @@
-import {MemoModel} from '../../models/memo.model';
-import {Component, input, output, signal, WritableSignal} from '@angular/core';
+import {UserProfileService} from '../../keycloak/user-profile.service';
+import {Component, inject, input, output} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MemoDTO} from '../../models/memo.dto.model';
 
@@ -17,9 +17,10 @@ export class MemoAllMemosComponent {
   emitMemoId = output<number>();
   emitMemoIdToDelete = output<number>();
 
+  protected readonly userProfileService = inject(UserProfileService);
+
   // goal: save custom color variants in database.
   // colorVariants should have a font color too
-    //
 
   private colorVariants = [
     'bg-[#d5aa92]',
@@ -33,10 +34,6 @@ export class MemoAllMemosComponent {
     } return;
   }
 
-
-  // TODO: fix this!
-  // Beide Methoden benötigen eine ID. vielleicht kann ich ja auch etwas mitgeben wie "id", "operation"?
-  // Wäre das der sinvollere Weg?
   mbid(id: number | undefined): void {
     if (id != null) {
       this.emitMemoId.emit(id);

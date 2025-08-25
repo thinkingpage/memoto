@@ -1,13 +1,17 @@
-<div class="mb-8 mt-4 mx-auto flex gap-x-6">
-  <a (click)="login()" class="btn btn-ghost link-primary">login</a>
-  <a (click)="logout()" class="btn btn-ghost link-primary">logout</a>
-
-
+<div class="my-6 mx-auto w-72 text-center">
   @if(userProfileService.profile(); as user ) {
     <span>
     Hallo, {{ user.username }}
     </span>
+    <a
+      class="my-6 p-2 border bg-amber-100/60 rounded-sm active:border-amber-100"
+      (click)="logout()">Logout</a>
+  } @else {
+    <a
+      class="my-6 p-2 border bg-amber-100/60 rounded-sm active:border-amber-100"
+      (click)="login()">Login</a>
   }
+
 
   @if(errorMessage()) {
     <p class="accent-error">ERROR: {{errorMessage()}}</p>
