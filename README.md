@@ -9,22 +9,19 @@ Developed by a Media Informatics graduate to deepen full-stack development exper
 
 ### 🧾 Memos
 
-- [ ] Create memos (text only)
-- [ ] Delete memos
+- [x] Create memos (text only)
+- [x] Delete memos
 - [ ] (Later) Memos with image attachments
 - [ ] Display memos per user (after authentication)
+
+### 🔐 Authentication (Keycloak)
+
+- [x] Only logged-in users can create or delete memos
 
 ### 📈 Suggestions & Trends
 
 - [ ] Simple endpoint for memo suggestions
-- [ ] Kafka consumer processes submitted memos:
-  - Extracts frequent words
-  - Returns a list of **Trending Words**
 - [ ] Frontend component displays trending terms
-
-### 🔐 Authentication (Keycloak)
-
-- [ ] Only logged-in users can create or delete memos
 
 ---
 
@@ -36,67 +33,45 @@ Developed by a Media Informatics graduate to deepen full-stack development exper
 | **PostgreSQL**         | Data modeling, queries, Docker integration               |
 | **Angular + TypeScript** | Components, services, HTTP communication, authentication |
 | **Keycloak**           | Authentication, JWT, role management                     |
-| **Apache Kafka**       | Event-driven architecture, producer/consumer setup       |
 | **Docker**             | Containerization of frontend, backend, and services      |
-| **CI with GitHub**     | Automated testing, GitHub Actions                        |
 | **Deployment**         | Frontend + Backend deployment                            |
 | **Documentation**      | README, setup instructions, screenshots                  |
 
 ---
 
 ## 📁 Project Structure
+
 project-root/<br>
-├── backend/ # Spring Boot application + Kafka + PostgreSQL<br>
+├── backend/ # Spring Boot application and the docker-compose.yml<br>
 ├── frontend/ # Angular application<br>
-├── docker-compose.yml # Local development environment<br>
-└── .github/workflows/ # CI pipelines via GitHub Actions<br>
-
-
----
-
-## 🚧 Development Status
-
-> This project is developed **iteratively** to gradually integrate each technology.
-
-- ⬜ **Phase 1:** Backend foundation  
-- ⬜ **Phase 2:** Frontend  
-- ⬜ **Phase 3:** Authentication  
-- ⬜ **Phase 4:** Kafka  
-- ⬜ **Phase 5:** CI / Testing  
-- ⬜ **Phase 6:** Deployment & Documentation  
-
----
-
-## 🛠 Project Organization
-
-A senior software engineer acts as a technical mentor to ensure production-grade code quality.
-
-Project management follows a real-world team process:
-
-- Tasks tracked via **Trello**  
-- Commits contain ticket numbers and are well-scoped  
-- Changes are made via **Pull Requests** with code review  
-- **Target Test Coverage:**
-  - Backend: ≥ 50%
-  - Frontend: ≥ 30%
-
-> Coverage goals are moderate to promote practical testing habits without overloading this learning project.
 
 ---
 
 ## 👨‍🏫 Supervised by
 
+A senior software engineer acts as a technical mentor to ensure production-grade code quality.
 [Sergej But](https://sergejbut.com)
+
+---
+
+## 🚀 Setup (Local Development)
+
+```
+ 1. cd /backend and docker-compose up
+ 2. add a new keycloak realm, client and user under the port 8080 (memoto-realm and memoto-client)
+ 3. cd /frontend and npm install
+ 4. start the frontend (ng serve) and backend
+```
 
 ---
 
 ## 🖼️ Screenshots
 
-> To be added in a later phase...
+> The following screenshot shows the target design from Figma, not the current state.
+
+> ![memoto-goal](https://github.com/user-attachments/assets/1b9c3f5d-5aa3-449d-9e9b-5f130b7db0e0)
 
 ---
-
-## 🚀 Setup (Local Development)
 
 ## ⚠️ Legal Notice
 This is a purely educational demo project. It is not affiliated with or derived from any commercial platform and avoids all brand references or protected terms.
