@@ -23,8 +23,8 @@ export class MemoAllMemosComponent {
   // colorVariants should have a font color too
 
   private colorVariants = [
-    'bg-[#d5aa92]',
-    'bg-[#b8f5d4]',
+    'bg-[#AF964C]',
+    'bg-[#BB917B]',
     'bg-[#cab988]'
   ]
 

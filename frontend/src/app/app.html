@@ -26,7 +26,7 @@
     <app-all-memos
       (emitMemoIdToDelete)="memoDeleteById($event)"
       (emitMemoId)="memoById($event)"
-      [memosFromDB]="memosDto()"
+      [memosFromDB]="memos()"
     >
     </app-all-memos>
     <app-memo-item [memoFromBackend]="memo()"></app-memo-item>

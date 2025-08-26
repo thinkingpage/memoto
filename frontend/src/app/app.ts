@@ -31,13 +31,11 @@ import {MemoDTO} from './models/memo.dto.model';
 export class App implements OnInit {
   protected readonly title = signal('memoto');
   showAddMemoComponent = signal<boolean>(false);
-  showMemoById = signal<boolean>(false);
   showAllMemoComponent = signal<boolean>(false);
-  memos = signal<MemoModel[]>([]);
-  memosDto = signal<MemoDTO[]>([]);
+  memos = signal<MemoDTO[]>([]);
   memo = signal<MemoModel | null>(null);
   errorMessage = signal<string | null>(null);
-  userColor = signal<string>('#ece3ca');
+  userColor = signal<string>('#ECE3CA');
 
   constructor(private memoService: MemoService) {
   }
@@ -47,33 +45,14 @@ export class App implements OnInit {
   }
 
   loadMemos() {
-    this.memoService.getMemosDTO().subscribe({
+    this.memoService.getMemos().subscribe({
       error: (error: HttpErrorResponse) => {
         console.log(error.message);
       },
       next: (response: MemoDTO[]) => {
-        this.memosDto.set(response);
+        this.memos.set(response);
       }
     })
-  }
-
-  get svgBackground() {
-    return this.getNoiseSVG(this.userColor());
-  }
-
-  getNoiseSVG(color: string): string {
-    const svg = `
-      <svg width="650" height="500" xmlns="http://www.w3.org/2000/svg">
-        <filter id='roughpaper' x='0%' y='0%' width='100%' height="100%">
-          <feTurbulence type="fractalNoise" baseFrequency='1' result='noise' numOctaves="5" />
-          <feDiffuseLighting in='noise' lighting-color='${color}' surfaceScale='2'>
-              <feDistantLight azimuth='45' elevation='60' />
-          </feDiffuseLighting>
-        </filter>
-        <rect x="0" y="0" width="100%" height="100%" filter="url(#roughpaper)" fill="none"/>
-      </svg>
-    `;
-    return `url('data:image/svg+xml;utf8,${encodeURIComponent(svg)}')`;
   }
 
   activateAddForm() {
@@ -90,11 +69,10 @@ export class App implements OnInit {
   addMemo(memo: MemoModel) {
 
     this.memoService.addMemo(memo).subscribe({
-        next: (response: MemoModel) => {
+        next: (response: MemoDTO) => {
           this.memos.update(value => {
-              return [...value, response];
-            }
-          )
+            return [...value, response];
+          });
         },
         error: (error: HttpErrorResponse) => {
           console.log("errormessage: " + error.message);

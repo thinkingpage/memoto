@@ -58,13 +58,19 @@ public class MemoController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping("/memosdto/{id}")
+    public ResponseEntity<MemoDTO> findMemoDTOById(@PathVariable long id) {
+        return new ResponseEntity<>(new MemoDTO(memoService.findMemoById(id)), HttpStatus.OK);
+    }
+
     @PostMapping("/memos")
-    public ResponseEntity<Memo> addMemo(@RequestBody Memo memo, Authentication authentication) {
+    public ResponseEntity<MemoDTO> addMemo(@RequestBody Memo memo, Authentication authentication) {
         User currentUser = userService.getCurrentUser(authentication);
         memo.setUser(currentUser);
         memo.setId(null);
         Memo savedMemo = memoService.addMemo(memo);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedMemo);
+//        return ResponseEntity<>(memoService.findMemoById(id), HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new MemoDTO(savedMemo));
     }
 
 
