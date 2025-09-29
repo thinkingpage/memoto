@@ -1,10 +1,8 @@
 CREATE USER keycloak_username WITH PASSWORD 'keycloak_password';
+
 CREATE DATABASE keycloak OWNER keycloak_username;
-
 CREATE DATABASE memodb OWNER postgres;
-
 \c memodb;
-
 
 CREATE TABLE IF NOT EXISTS users
 (

@@ -6,8 +6,6 @@ import com.example.memoto.repository.MemoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.ZoneOffset;
 import java.util.List;
 
 
@@ -45,21 +43,4 @@ public class MemoService {
         return memoRepository.findMemoById(id).
                 orElseThrow(() -> new MemoNotFoundException("MemoService not found"));
     }
-
-    public List<Memo> find10FirstMemos() {
-        return memoRepository.findFirst10ByOrderByCreatedOnDesc();
-    }
-
-    public List<Memo> findByTitleContaining(String title, int year) {
-        LocalDate startDate = LocalDate.of(year, 1, 1);
-        LocalDate endDate = startDate.plusYears(1);
-        return memoRepository.findByTitleContainingAndCreatedOnBetween(title, startDate.atStartOfDay().toInstant(ZoneOffset.UTC), endDate.atStartOfDay().toInstant(ZoneOffset.UTC));
-    }
-
-    public List<Memo> finde(String title, int year) {
-        LocalDate startDate = LocalDate.of(year, 1, 1);
-        LocalDate endDate = startDate.plusYears(1);
-        return memoRepository.test(title, startDate.atStartOfDay().toInstant(ZoneOffset.UTC), endDate.atStartOfDay().toInstant(ZoneOffset.UTC));
-    }
-
 }

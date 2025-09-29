@@ -84,7 +84,6 @@ export class App implements OnInit {
   }
 
   memoDeleteById(id: number): void {
-
     this.memoService.deleteMemo(id).subscribe({
       next: () => {
         this.memos.update(value => {

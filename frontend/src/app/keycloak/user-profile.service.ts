@@ -8,12 +8,9 @@ export class UserProfileService {
   private keycloakSignal = inject(KEYCLOAK_EVENT_SIGNAL);
   public profile = signal<Keycloak.KeycloakProfile | null> (null);
 
-
   constructor() {
     effect(() => {
       const event = this.keycloakSignal();
-
-      console.log("in here?");
 
       if (event.type === KeycloakEventType.Ready && this.keycloak.authenticated) {
         this.loadUserProfile();

@@ -7,13 +7,13 @@ import com.example.memoto.service.MemoService;
 import com.example.memoto.service.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -69,50 +69,7 @@ public class MemoController {
         memo.setUser(currentUser);
         memo.setId(null);
         Memo savedMemo = memoService.addMemo(memo);
-//        return ResponseEntity<>(memoService.findMemoById(id), HttpStatus.OK);
         return ResponseEntity.status(HttpStatus.CREATED).body(new MemoDTO(savedMemo));
-    }
-
-
-    @GetMapping("/find10firstmemos")
-    public ResponseEntity<List<Memo>> find10firstmemos() {
-        return new ResponseEntity<>(memoService.find10FirstMemos(), HttpStatus.OK);
-    }
-
-    @GetMapping("/find")
-    public ResponseEntity<List<Memo>> find(
-            @RequestParam(name="title") String title,
-            @RequestParam(name="year") int year
-    ) {
-        return new ResponseEntity<>(memoService.findByTitleContaining(title, year), HttpStatus.OK);
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity<List<Memo>> finde(
-            @RequestParam(name="title") String title,
-            @RequestParam(name="year") int year
-    ) {
-        return new ResponseEntity<>(memoService.finde(title, year), HttpStatus.OK);
-    }
-
-    // keycloak tests
-    @GetMapping("/")
-    public String home(OAuth2AuthenticationToken token) {
-        if (token != null) {
-            String username = token.getPrincipal().getAttribute("preferred_username");
-            return "Welcome " + username + "! </br>" +
-                    "<a href='/secure'>Secured area</a> | " +
-                    "<a href='/user'>User info</a> | " +
-                    "<a href='/logout'>Logout</a>";
-        }
-        return "Welcome to public area! " +
-                "<a href='/secure'>Secured area (requires login)</a> | " +
-                "<a href='/oauth2/authorization/keycloak'>Login</a>";
-    }
-
-    @GetMapping("/secure")
-    public String secure(OAuth2AuthenticationToken token) {
-        return "Hello <b>" + token.getPrincipal().getAttribute("preferred_username") + "</b> you have access. </br>" + "You can <a href='/logout'>Logout</a> too";
     }
 
     @GetMapping("/user")
@@ -122,21 +79,5 @@ public class MemoController {
             return ResponseEntity.ok(principal.getAttributes());
         }
         return ResponseEntity.ok(Map.of("error", "not logged in"));
-    }
-
-    @GetMapping("/login")
-    public String login() {
-        return "redirect:/realms/spring-realm/protocol/openid-connect/login?redirect_uri=http://localhost:8081/";
-    }
-
-    @GetMapping("/logout")
-    public String logout() {
-        return "redirect:/realms/spring-realm/protocol/openid-connect/logout?redirect_uri=http://localhost:8081/";
-    }
-
-    @GetMapping("/force-logout")
-    public String forceLogout(HttpServletRequest request) throws Exception {
-        request.logout();
-        return "redirect:/realms/spring-realm/protocol/openid-connect/logout?redirect_uri=http://localhost:8081/";
     }
 }
