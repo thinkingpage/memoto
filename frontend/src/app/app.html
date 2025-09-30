@@ -26,6 +26,7 @@
     <app-all-memos
       (emitMemoIdToDelete)="memoDeleteById($event)"
       (emitMemoId)="memoById($event)"
+      (emitUsername)="loadMemosByUser($event)"
       [memosFromDB]="memos()"
     >
     </app-all-memos>

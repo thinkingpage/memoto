@@ -26,6 +26,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/memos/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/memos").permitAll()
                         .requestMatchers(HttpMethod.GET, "/memosdto/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "users/*/memos").permitAll()
                         .requestMatchers(HttpMethod.POST, "/memos").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/memos/**").authenticated()
                         .anyRequest().denyAll()

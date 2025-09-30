@@ -33,6 +33,7 @@ export class App implements OnInit {
   showAddMemoComponent = signal<boolean>(false);
   showAllMemoComponent = signal<boolean>(false);
   memos = signal<MemoDTO[]>([]);
+  memosByUser = signal<MemoDTO[]>([])
   memo = signal<MemoModel | null>(null);
   errorMessage = signal<string | null>(null);
   userColor = signal<string>('#ECE3CA');
@@ -55,6 +56,18 @@ export class App implements OnInit {
     })
   }
 
+  loadMemosByUser(username: string) {
+    this.memoService.getMemosByUser(username).subscribe({
+      error: (error: HttpErrorResponse) => {
+        console.log(error.message);
+      },
+      next: (response: MemoDTO[])=> {
+        this.memosByUser.set(response);
+        console.log(this.memosByUser())
+      }
+    })
+  }
+
   activateAddForm() {
     this.showAddMemoComponent.update(value => !value);
   }
@@ -67,7 +80,6 @@ export class App implements OnInit {
   }
 
   addMemo(memo: MemoModel) {
-
     this.memoService.addMemo(memo).subscribe({
         next: (response: MemoDTO) => {
           this.memos.update(value => {

@@ -27,4 +27,8 @@ export class MemoService {
   public deleteMemo(memoId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/memos/${memoId}`)
   }
+
+  public getMemosByUser(username: string): Observable<MemoDTO[]> {
+    return this.http.get<MemoDTO[]>(`${this.apiServerUrl}/users/${username}/memos`)
+  }
 }

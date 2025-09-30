@@ -16,7 +16,8 @@ public interface MemoRepository extends JpaRepository<Memo, Integer> {
     Optional<Memo> findMemoById(long id);
     void deleteById(long id);
 
-
+    List<Memo> findByUser_Username(String username);
+    
     // keep -> good overwiew
     @Query(value="select m from Memo m where m.title like :title "
             + "and m.createdOn >= :start "

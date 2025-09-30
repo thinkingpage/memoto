@@ -20,15 +20,6 @@ public class MemoService {
     }
 
     @Transactional
-    public Memo saveMemo(Memo memo) {
-        return memoRepository.save(memo);
-    }
-
-    public List<Memo> findAllMemos() {
-        return memoRepository.findAll();
-    }
-
-    @Transactional
     public void deleteMemoById(long id) {
         memoRepository.deleteById(id);
         System.out.println("memo has been deleted");
@@ -37,6 +28,19 @@ public class MemoService {
     @Transactional
     public Memo addMemo(Memo memo) {
         return memoRepository.save(memo);
+    }
+
+    @Transactional
+    public Memo saveMemo(Memo memo) {
+        return memoRepository.save(memo);
+    }
+
+    public List<Memo> findAllMemos() {
+        return memoRepository.findAll();
+    }
+
+    public List<Memo> findAllMemosOfUser(String username) {
+        return memoRepository.findByUser_Username(username);
     }
 
     public Memo findMemoById(long id) {

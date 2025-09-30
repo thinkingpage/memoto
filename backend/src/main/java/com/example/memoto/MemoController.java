@@ -38,6 +38,16 @@ public class MemoController {
         return new ResponseEntity<>(memos, HttpStatus.OK);
     }
 
+    @GetMapping("/users/{username}/memos")
+    public ResponseEntity<List<MemoDTO>> findAllMemosOfUser(@PathVariable String username) {
+        List<MemoDTO> memos = memoService.findAllMemosOfUser(username)
+                .stream()
+                .map(MemoDTO::new)
+                .collect(Collectors.toList());
+        System.out.println(memos);
+        return new ResponseEntity<>(memos, HttpStatus.OK);
+    }
+
     @GetMapping("/memosdto")
     public ResponseEntity<List<MemoDTO>> findAllMemosDTO() {
         List<MemoDTO> memos = memoService.findAllMemos()

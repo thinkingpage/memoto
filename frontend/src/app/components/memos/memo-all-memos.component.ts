@@ -16,6 +16,7 @@ export class MemoAllMemosComponent {
   memosFromDB = input<MemoDTO[]>();
   emitMemoId = output<number>();
   emitMemoIdToDelete = output<number>();
+  emitUsername = output<string>()
 
   protected readonly userProfileService = inject(UserProfileService);
 
@@ -34,14 +35,20 @@ export class MemoAllMemosComponent {
     } return;
   }
 
+  showMemosOfUser(username: string | undefined): void {
+    if(username) {
+      this.emitUsername.emit(username);
+    }
+  }
+
   mbid(id: number | undefined): void {
-    if (id != null) {
+    if (id) {
       this.emitMemoId.emit(id);
     }
   }
 
   deleteMemoById(id: number | undefined): void {
-    if (id != null) {
+    if (id) {
       this.emitMemoIdToDelete.emit(id);
     }
   }
