@@ -15,16 +15,8 @@ spring:
         format_sql: true
   security:
     oauth2:
-#      client:
-#        registration:
-#          keycloak:
-#            client-id: memoto-client
-#            authorization-grant-type: authorization_code
-#            redirect-uri: http://localhost:8081/login/oauth2/code/keycloak
-#            scope: openid,profile,email
-#        provider:
-#          keycloak:
-#            issuer-uri: http://localhost:8080/realms/memoto-realm
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8080/realms/memoto-realm
+  kafka:
+    bootstrap-servers: localhost:9092

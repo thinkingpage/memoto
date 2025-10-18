@@ -5,8 +5,7 @@ import com.example.memoto.model.Memo;
 import com.example.memoto.model.User;
 import com.example.memoto.service.MemoService;
 import com.example.memoto.service.UserService;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -28,9 +27,6 @@ public class MemoController {
         this.memoService = memoService;
         this.userService = userService;
     }
-
-    @PersistenceContext
-    private EntityManager entityManager;
 
     @GetMapping("/memos")
     public ResponseEntity<List<Memo>> findAllMemos() {
