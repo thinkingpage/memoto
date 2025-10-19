@@ -1,9 +1,10 @@
 package com.example.memoto.service;
 
 import com.example.memoto.exception.MemoNotFoundException;
-import com.example.memoto.kafka.producer.MyKafkaProducer;
+import com.example.memoto.kafka.MemoEvent;
 import com.example.memoto.model.Memo;
 import com.example.memoto.repository.MemoRepository;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,25 +16,26 @@ import java.util.List;
 public class MemoService {
 
     private final MemoRepository memoRepository;
-    private final MyKafkaProducer kafkaProducer;
+    private final KafkaTemplate kafkaTemplate;
 
-    public MemoService(MemoRepository memoRepository,  MyKafkaProducer kafkaProducer) {
+    public MemoService(MemoRepository memoRepository, KafkaTemplate kafkaTemplate) {
         this.memoRepository = memoRepository;
-        this.kafkaProducer = kafkaProducer;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @Transactional
     public void deleteMemoById(long id) {
         memoRepository.deleteById(id);
+        kafkaTemplate.send("memo-topic", "deleted the memo with id: " + id);
         System.out.println("memo has been deleted");
     }
 
     @Transactional
     public Memo addMemo(Memo memo) {
         Memo savedMemo = memoRepository.save(memo);
+        MemoEvent memoEvent = new MemoEvent("memo-created", savedMemo);
 
-        String message = String.format("new memo with title: %s added!", savedMemo.getTitle());
-        kafkaProducer.send("memo-created", message);
+        kafkaTemplate.send("memo-topic", memoEvent.eventType(), memoEvent);
 
         return memoRepository.save(memo);
     }

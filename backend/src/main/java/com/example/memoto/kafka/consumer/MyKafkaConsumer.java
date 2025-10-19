@@ -6,8 +6,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyKafkaConsumer {
 
-    @KafkaListener(topics = "test-topic", groupId = "memoto-group")
-    public void listen(String message) {
-        System.out.println("Received message: " + message);
+    @KafkaListener(topics = "memo-topic", groupId = "memo-created")
+    public void listen() {
+        System.out.println("Received message in the KafkaListener memo-created topic");
     }
+
+    @KafkaListener(topics = "memo-topic", groupId = "memo-deleted")
+    public void listenTest() {
+        System.out.println("Received message in the test topic");
+    }
+
 }
+
