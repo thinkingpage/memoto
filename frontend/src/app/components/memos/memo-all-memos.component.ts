@@ -1,7 +1,7 @@
 import {UserProfileService} from '../../keycloak/user-profile.service';
-import {Component, inject, input, output} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MemoDTO} from '../../models/memo.dto.model';
+import {MemoStateService} from './memo-state.service';
 
 @Component({
   selector: 'app-all-memos',
@@ -11,14 +11,14 @@ import {MemoDTO} from '../../models/memo.dto.model';
   ],
   templateUrl: 'memo-all-memos.component.html',
 })
-export class MemoAllMemosComponent {
-  showAllMemos = input<boolean>();
-  memosFromDB = input<MemoDTO[]>();
-  emitMemoId = output<number>();
-  emitMemoIdToDelete = output<number>();
-  emitUsername = output<string>()
 
-  protected readonly userProfileService = inject(UserProfileService);
+export class MemoAllMemosComponent {
+
+  constructor (
+    public memoStateService: MemoStateService,
+    protected userProfileService: UserProfileService
+  )
+  {}
 
   // goal: save custom color variants in database.
   // colorVariants should have a font color too
@@ -29,27 +29,23 @@ export class MemoAllMemosComponent {
     'bg-[#cab988]'
   ]
 
+
   backgroundColorGenerator(id: number | undefined) {
     if(id) {
       return this.colorVariants[(id % this.colorVariants.length)];
     } return;
   }
 
-  showMemosOfUser(username: string | undefined): void {
+  showAllMemosFromUser(username: string): void {
     if(username) {
-      this.emitUsername.emit(username);
+      this.memoStateService.usernameFromClicked.set(username);
     }
   }
 
-  mbid(id: number | undefined): void {
+  deleteMemoById(id: number): void {
+    console.log(id);
     if (id) {
-      this.emitMemoId.emit(id);
-    }
-  }
-
-  deleteMemoById(id: number | undefined): void {
-    if (id) {
-      this.emitMemoIdToDelete.emit(id);
+      this.memoStateService.memoToDelete.set(id);
     }
   }
 }

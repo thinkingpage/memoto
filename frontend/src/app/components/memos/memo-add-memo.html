@@ -1,11 +1,8 @@
- @if (showAddMemoForm()) {
-   <div
-     class="w-[96vw] mx-auto"
-   >
-    <form [formGroup]="addMemoForm" (ngSubmit)="formMemo()" name="formContainer"
-          class="grid grid-cols-10"
-    >
-      <div class="col-span-6">
+<div class="w-[96vw] mx-auto">
+  <form [formGroup]="addMemoForm" (ngSubmit)="formMemo()" name="formContainer"
+        class="grid grid-cols-10"
+  >
+    <div class="col-span-6">
       <input formControlName="title"
              type="text"
              name="title"
@@ -22,14 +19,21 @@
              required
              class="p-2 m-1 bg-amber-200 rounded-md"
       />
-      </div>
-      <button
-        class="font-medium col-span-4 bg-amber-800 rounded-md text-amber-100"
-        type="submit">Add</button>
-    </form>
+    </div>
+    <button
+      class="font-medium col-span-4 bg-amber-800 rounded-md text-amber-100"
+      type="submit">Add</button>
+  </form>
 
-    @if (addMemoForm.controls.title.invalid || addMemoForm.controls.content.invalid) {
-      <span class="text-warning text-sm">Stelle sicher, dass der Titel mindestens 1 und der Content mindestens 3 Zeichen enthält.</span>
-    }
-   </div>
+  @if(userInputMessage()) {
+    <span class="text-warning text-sm">
+        {{ userInputMessage() }}
+      </span>
   }
+</div>
+
+<style>
+  input::placeholder {
+    opacity: 60%;
+  }
+</style>

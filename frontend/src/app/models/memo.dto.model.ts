@@ -3,5 +3,5 @@ export interface MemoDTO {
   title: string;
   content: string;
   createdOn?: string;
-  username?: string;
+  username: string;
 }

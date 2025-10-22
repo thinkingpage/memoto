@@ -1,10 +1,10 @@
 <div class="">
-    @for (memo of memosFromDB(); track memo.id) {
+    @for (memo of memoStateService.memos(); track memo.id) {
     <div [class]="backgroundColorGenerator(memo.id)"
       class="flex backdrop-hue-rotate-90 opacity-80 flex-col filter w-[95vw] mx-auto my-6 backdrop-blur-xl border border-amber-100 rounded-lg">
       <div class="mx-3 mb-0 border-b border-slate-200 pt-3 pb-2 px-1">
     <span class="text-sm font-medium text-slate-600">
-      <button (click)="showMemosOfUser(memo.username)">
+      <button (click)="showAllMemosFromUser(memo.username)">
         <a>{{memo.username}}</a>
       </button>
     </span>
@@ -23,7 +23,7 @@
       {{ memo.createdOn }}
     </span>
         <div class="flex flex-col w-[25%] text-[blue]">
-          <button (click)="mbid(memo.id)">show {{ memo.id }}</button>
+          <button>show {{ memo.id }}</button>
         </div>
         @if(userProfileService.profile()) {
         <div class="flex flex-col w-[25%] text-[red]">

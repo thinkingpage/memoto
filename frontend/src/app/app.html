@@ -18,35 +18,38 @@
           [attr.filter]="'url(#bgnoise' + userColor() + ')'"
           fill="none"/>
   </svg>
-  <div class="content w-96 mx-auto">
-    <app-header></app-header>
-    <app-menu [errorMessage]="errorMessage()"></app-menu>
-    <app-filter (triggerAddForm)="activateAddForm()" (triggerMemoList)="activateMemoList()"></app-filter>
-    <app-memo-add-memo [showAddMemoForm]="showAddMemoComponent()" (emitForm)="addMemo($event)"></app-memo-add-memo>
-    <app-all-memos
-      (emitMemoIdToDelete)="memoDeleteById($event)"
-      (emitMemoId)="memoById($event)"
-      (emitUsername)="loadMemosByUser($event)"
-      [memosFromDB]="memos()"
-    >
-    </app-all-memos>
-    <app-memo-item [memoFromBackend]="memo()"></app-memo-item>
-    <app-footer></app-footer>
+<app-header></app-header>
+  <app-menu></app-menu>
+  <router-outlet>
 
+  </router-outlet>
 
+<!--  <div class="content w-96 mx-auto">-->
+<!--    <app-header></app-header>-->
+<!--    <app-menu [errorMessage]="errorMessage()"></app-menu>-->
+<!--    <app-filter (triggerAddForm)="activateAddForm()" (triggerMemoList)="activateMemoList()"></app-filter>-->
+<!--    <app-memo-add-memo [showAddMemoForm]="showAddMemoComponent()" (emitForm)="addMemo($event)"></app-memo-add-memo>-->
+<!--    <app-all-memos-->
+<!--      (emitMemoIdToDelete)="memoDeleteById($event)"-->
+<!--      (emitMemoId)="memoById($event)"-->
+<!--      (emitUsername)="loadMemosByUser($event)"-->
+<!--      [memosFromDB]="memos()"-->
+<!--    >-->
+<!--    </app-all-memos>-->
+<!--    <app-memo-item [memoFromBackend]="memo()"></app-memo-item>-->
+<!--    <app-footer></app-footer>-->
 
-    <!-- Firefox und Vivaldi rendern anders. Chromium ist viel "sanfter". Man muss irgend eine Änderung am DOM erzwingen -->
-    <label>
-      Noise-Farbe wählen:
-      <input
-        type="color"
-        [value]="userColor()"
-        (input)="userColor.set($any($event.target).value)"
-      />
+<!--&lt;!&ndash;    &lt;!&ndash; Firefox und Vivaldi rendern anders. Chromium ist viel "sanfter". Man muss irgend eine Änderung am DOM erzwingen &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    <label>&ndash;&gt;-->
+<!--&lt;!&ndash;      Noise-Farbe wählen:&ndash;&gt;-->
+<!--&lt;!&ndash;      <input&ndash;&gt;-->
+<!--&lt;!&ndash;        type="color"&ndash;&gt;-->
+<!--&lt;!&ndash;        [value]="userColor()"&ndash;&gt;-->
+<!--&lt;!&ndash;        (input)="userColor.set($any($event.target).value)"&ndash;&gt;-->
+<!--&lt;!&ndash;      />&ndash;&gt;-->
+<!--&lt;!&ndash;    </label>&ndash;&gt;-->
 
-
-    </label>
-  </div>
+<!--  </div>-->
 </div>
 
 <style>
@@ -87,7 +90,3 @@
     overflow: hidden;
   }
 </style>
-<!--
-  // all-memos
-  [showAllMemos]="showAllMemoComponent()" und all-memos component
--->

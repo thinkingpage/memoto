@@ -14,7 +14,6 @@ import { routes } from './app.routes';
 
 const urlCondition = createInterceptorCondition<IncludeBearerTokenCondition>({
   urlPattern: /^(http:\/\/localhost:8081)(\/.*)?$/i,
-  bearerPrefix: 'Bearer'
 });
 
 export const appConfig: ApplicationConfig = {

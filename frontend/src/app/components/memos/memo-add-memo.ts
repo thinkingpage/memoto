@@ -1,6 +1,7 @@
-import {Component, input, output, signal} from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Component, effect, inject, output, signal} from '@angular/core';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MemoModel} from '../../models/memo.model';
+import {MemoStateService} from './memo-state.service';
 
 @Component({
   selector: 'app-memo-add-memo',
@@ -12,9 +13,8 @@ import {MemoModel} from '../../models/memo.model';
 })
 export class MemoAddMemo {
 
-  showAddMemoForm = input<boolean>()
-  emitForm = output<MemoModel>();
-  userInputMessage = signal<string>("");
+  userInputMessage = signal<string | null>(null);
+  private memoStateService: MemoStateService = inject(MemoStateService)
 
   addMemoForm = new FormGroup({
     title: new FormControl("", [Validators.required, Validators.minLength(1)]),
@@ -35,17 +35,14 @@ export class MemoAddMemo {
       return;
     }
 
-    if(this.title.length == 0 && this.content.length == 0) {
-      this.userInputMessage.set("Need Title and Content!");
-      return;
-    }
+    this.userInputMessage.set(null)
 
     let memo: MemoModel = {
       title: this.title,
       content: this.content
     };
 
-    this.emitForm.emit(memo);
+    this.memoStateService.addMemoFormInput.set(memo);
     this.addMemoForm.reset();
   }
 }
