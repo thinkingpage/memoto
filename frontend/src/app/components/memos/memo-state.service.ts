@@ -18,7 +18,7 @@ export class MemoStateService {
   private memoService: MemoService = inject(MemoService)
 
   private _loadAllMemosFromUserName = effect(() => {
-    if (this.usernameFromClicked() && this.memos()) {
+    if (this.usernameFromClicked()) {
       this.memoService.getMemosByUser(this.usernameFromClicked()).subscribe({
         error: (error: HttpErrorResponse) => {
           console.log("errormessage: " + error.message);
@@ -30,9 +30,10 @@ export class MemoStateService {
     }
   });
 
-  private _addMemo = effect(() => {
+  // this method is not private and not an effect operation because the initialization value of the signals triggers
+  // a new memo to add with empty values.
+  addMemo () {
     let memo = this.addMemoFormInput();
-    if(memo) {
       this.memoService.addMemo(memo).subscribe({
           next: (response: MemoDTO) => {
             this.memos.update(value => {
@@ -42,9 +43,8 @@ export class MemoStateService {
           error: (error: HttpErrorResponse) => {
             console.log("errormessage: " + error.message);
           },
-        }
-      )
-    }})
+        })
+    }
 
   private _deleteMemoFromId = effect(() => {
     if(this.memoToDelete()) {

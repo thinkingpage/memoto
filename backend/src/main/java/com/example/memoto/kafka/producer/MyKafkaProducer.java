@@ -12,8 +12,8 @@ public class MyKafkaProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void send(String topic, String key, String message) {
-        kafkaTemplate.send(topic, key, message);
-        System.out.println("Sent message: " + message);
+    public void send(String topic, String value) {
+        kafkaTemplate.send(topic, value);
+        System.out.println("PRODUCER");
     }
 }

@@ -6,15 +6,18 @@ import org.springframework.stereotype.Component;
 @Component
 public class MyKafkaConsumer {
 
-    @KafkaListener(topics = "memo-topic", groupId = "memo-created")
-    public void listen() {
-        System.out.println("Received message in the KafkaListener memo-created topic");
+    @KafkaListener(topics = "memo-topic", groupId = "memo-group")
+    public void memoConsumer(String info) {
+        switch(info) {
+            case "memo-created":
+                System.out.println("CREATE RECEIVED");
+                break;
+            case "memo-deleted":
+                System.out.println("DELETE RECEIVED");
+                break;
+            default:
+                System.out.println("UNKNOWN EVENT");
+        }
     }
-
-    @KafkaListener(topics = "memo-topic", groupId = "memo-deleted")
-    public void listenTest() {
-        System.out.println("Received message in the test topic");
-    }
-
 }
 

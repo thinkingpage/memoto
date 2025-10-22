@@ -1,5 +1,5 @@
 import {UserProfileService} from '../../keycloak/user-profile.service';
-import {Component, signal} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MemoStateService} from './memo-state.service';
 
@@ -33,7 +33,8 @@ export class MemoAllMemosComponent {
   backgroundColorGenerator(id: number | undefined) {
     if(id) {
       return this.colorVariants[(id % this.colorVariants.length)];
-    } return;
+    }
+    return;
   }
 
   showAllMemosFromUser(username: string): void {

@@ -43,6 +43,7 @@ export class MemoAddMemo {
     };
 
     this.memoStateService.addMemoFormInput.set(memo);
+    this.memoStateService.addMemo();
     this.addMemoForm.reset();
   }
 }
