@@ -17,6 +17,8 @@ public interface MemoRepository extends JpaRepository<Memo, Integer> {
     void deleteById(long id);
 
     List<Memo> findByUser_Username(String username);
+
+    Optional<Memo> findByIdAndUserId(Long id, String userId);
     
     // keep -> good overwiew
     @Query(value="select m from Memo m where m.title like :title "

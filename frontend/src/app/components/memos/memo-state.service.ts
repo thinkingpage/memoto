@@ -50,7 +50,6 @@ export class MemoStateService {
     if(this.memoToDelete()) {
       this.memoService.deleteMemo(this.memoToDelete()).subscribe({
         next: () => {
-          console.log("send.")
           this.memos.update(value => {
               return value.filter(memo => memo.id !== this.memoToDelete());
             }

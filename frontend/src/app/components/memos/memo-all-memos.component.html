@@ -5,7 +5,7 @@
       <div class="mx-3 mb-0 border-b border-slate-200 pt-3 pb-2 px-1">
     <span class="text-sm font-medium text-slate-600">
       <button (click)="showAllMemosFromUser(memo.username)">
-        <a>{{memo.username}}</a>
+        <a>{{memo.username}} - (memo id: {{memo.id}})</a>
       </button>
     </span>
       </div>
@@ -22,12 +22,9 @@
     <span class="text-sm text-slate-600 font-medium">
       {{ memo.createdOn }}
     </span>
-        <div class="flex flex-col w-[25%] text-[blue]">
-          <button>show {{ memo.id }}</button>
-        </div>
-        @if(userProfileService.profile()) {
+        @if(userProfileService.profile()?.username === memo.username) {
         <div class="flex flex-col w-[25%] text-[red]">
-          <button (click)="deleteMemoById(memo.id)">delete {{ memo.id }}</button>
+          <button (click)="deleteMemoById(memo.id)">delete your memo</button>
         </div>
         }
       </div>
